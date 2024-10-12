@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func printNodeValue(n *bst.BST) (error) {
+func printNodeValue(n *bst.Node) (error) {
 	if (n == nil) {
 		return errors.New("n is nil")
 	}
@@ -17,17 +17,17 @@ func printNodeValue(n *bst.BST) (error) {
 }
 
 func main() {
-		var tree *bst.BST
+		tree := &bst.BST{}
 
-		bst.Insert(&tree, 10)
-		bst.Insert(&tree, 5)
-		bst.Insert(&tree, 15)
-		bst.Insert(&tree, 1)
-		bst.Insert(&tree, 7)
+		tree.Insert(10)
+		tree.Insert(5)
+		tree.Insert(15)
+		tree.Insert(1)
+		tree.Insert(7)
 
-		bst.InOrderTraversal(tree, printNodeValue)
+		// tree.InOrderTraversal(printNodeValue)
 
-		bst.Remove(&tree, 5)
+		tree.Remove(5)
 
-		bst.InOrderTraversal(tree, printNodeValue)
+		tree.InOrderTraversal(printNodeValue)
 }
