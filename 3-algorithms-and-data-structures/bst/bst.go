@@ -128,7 +128,6 @@ func (node *Node) remove(value int) (error) {
 
 type TraversalCallback func (*Node) (error)
 
-
 func (tree *BST) PreOrderTraversal(cb TraversalCallback) {
 	if (tree != nil) {
 		tree.root.Right.PreOrderTraversal(cb)
