@@ -30,6 +30,42 @@ func Insert(tree **BST, value int) (error) {
 	}
 }
 
+func getRightmostNode(tree **BST) *BST {
+	iterator := *tree
+
+	for iterator.Right != nil {
+		iterator = iterator.Right
+	}
+
+	return iterator
+}
+
+func Remove(tree **BST, value int) (error) {
+	if (*tree == nil) {
+		return errors.New("tree is nil or value not found")
+	} else if ((*tree).Value == value) {
+		if ((*tree).Left == nil && (*tree).Right == nil) {
+			*tree = nil
+		} else if ((*tree).Left != nil && (*tree).Right == nil) {
+			*tree = (*tree).Left
+		} else if ((*tree).Left == nil && (*tree).Right != nil) {
+			*tree = (*tree).Right
+		} else {
+			rightmostNode := getRightmostNode(&(*tree).Left)
+
+			(*tree).Value = rightmostNode.Value
+
+			Remove(&(*tree).Left, rightmostNode.Value)
+		}
+
+		return nil
+	} else if ((*tree).Value < value) {
+		return Remove(&(*tree).Left, value)
+	} else {
+		return Remove(&(*tree).Right, value)
+	}
+}
+
 type TraversalCallback func (*BST) (error)
 
 func PreOrderTraversal(tree *BST, cb TraversalCallback) {

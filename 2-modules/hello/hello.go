@@ -26,10 +26,9 @@ func main() {
 	bst.Insert(&tree, 1)
 	bst.Insert(&tree, 7)
 
-	bst.PreOrderTraversal(tree, printNodeValue)
-	fmt.Println()
 	bst.InOrderTraversal(tree, printNodeValue)
-	fmt.Println()
-	bst.PostOrderTraversal(tree, printNodeValue)
-	fmt.Println()
+
+	bst.Remove(&tree, 5)
+
+	bst.InOrderTraversal(tree, printNodeValue)
 }
