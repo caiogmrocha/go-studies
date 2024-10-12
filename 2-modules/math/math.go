@@ -27,3 +27,9 @@ func Sum(numbers *[]float64) float64 {
 
   return sum
 }
+
+func SquareArray(numbers *[]float64) {
+	for k, v := range *numbers {
+		(*numbers)[k] = v*v
+	}
+}
