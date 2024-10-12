@@ -26,15 +26,16 @@ func main() {
 	// SquareArray test
 	math.SquareArray(&numbers)
 
-	fmt.Print("[ ")
+	fmt.Println(numbers)
 
-	for i := 0; i < len(numbers); i++ {
-		if (i != len(numbers) - 1) {
-			fmt.Printf("%v, ", numbers[i])
-		} else {
-			fmt.Printf("%v", numbers[i])
-		}
+	// PrimesLessThan test
+
+	primes, error := math.PrimesLessThan(20)
+
+	if error != nil {
+		fmt.Println(error)
+		return
 	}
 
-	fmt.Println(" ]")
+	fmt.Println(primes)
 }

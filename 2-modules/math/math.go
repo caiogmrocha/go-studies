@@ -33,3 +33,23 @@ func SquareArray(numbers *[]float64) {
 		(*numbers)[k] = v*v
 	}
 }
+
+func PrimesLessThan(l int) ([]int, error) {
+	if (l < 2) {
+		return []int{}, errors.New("l is less than 2")
+	}
+
+	primes := []int{}
+
+	loop: for i := 2; i < l; i++ {
+		for j := 2; j < i; j++ {
+			if i % j == 0 {
+				continue loop
+			}
+		}
+
+		primes = append(primes, i)
+	}
+
+	return primes, nil
+}
