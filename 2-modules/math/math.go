@@ -17,3 +17,13 @@ func Fatorial(n int) (int, error) {
 
 	return (n * f), nil
 }
+
+func Sum(numbers *[]float64) float64 {
+  sum := 0.
+
+  for _, n := range *numbers {
+    sum += n
+  }
+
+  return sum
+}
