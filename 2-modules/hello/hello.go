@@ -3,39 +3,23 @@ package main
 import (
 	"fmt"
 
-	"example.com/math"
+	"example.com/bst"
 )
+
+func printNodeValue(n int) (error) {
+	fmt.Println(n)
+
+	return nil
+}
+
 func main() {
-	// Fatorial test
-	f, error := math.Fatorial(5)
+	var tree *bst.BST
 
-	if (error != nil) {
-		fmt.Print("Fatorial de 5: ")
-    fmt.Println(error)
-	} else {
-		fmt.Println(f)
-	}
+	bst.Insert(&tree, 10)
+	bst.Insert(&tree, 5)
+	bst.Insert(&tree, 15)
+	bst.Insert(&tree, 1)
+	bst.Insert(&tree, 7)
 
-	numbers := []float64{1,2,3,4}
-
-	// Sum test
-	sum := math.Sum(&numbers)
-
-	fmt.Println(sum)
-
-	// SquareArray test
-	math.SquareArray(&numbers)
-
-	fmt.Println(numbers)
-
-	// PrimesLessThan test
-
-	primes, error := math.PrimesLessThan(20)
-
-	if error != nil {
-		fmt.Println(error)
-		return
-	}
-
-	fmt.Println(primes)
+	bst.InOrderTraversal(tree, printNodeValue)
 }
