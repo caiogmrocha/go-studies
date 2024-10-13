@@ -1,17 +1,22 @@
 package graph
 
-import "errors"
+import (
+	"errors"
+
+	"ads/queue"
+)
 
 type Graph[T comparable] struct {
 	Vertices map[string](*Vertex[T])
 }
 
-type Vertex[T any] struct {
+type Vertex[T comparable] struct {
+	Id string
 	Data T
 	Adjacences []*Vertex[T]
 }
 
-func (graph *Graph[T]) AddVertex(id string, vertex *Vertex[T]) (error) {
+func (graph *Graph[T]) AddVertex(vertex *Vertex[T]) (error) {
 	if (graph == nil) {
 		return errors.New("graph is nil")
 	}
@@ -20,11 +25,10 @@ func (graph *Graph[T]) AddVertex(id string, vertex *Vertex[T]) (error) {
 		graph.Vertices = map[string](*Vertex[T]){}
 	}
 
-	graph.Vertices[id] = vertex
+	graph.Vertices[vertex.Id] = vertex
 
 	return nil
 }
-
 
 func (graph *Graph[T]) AddAdjacence(a *Vertex[T], b *Vertex[T]) (error) {
 	bFounded := false
@@ -53,8 +57,45 @@ func (graph *Graph[T]) AddAdjacence(a *Vertex[T], b *Vertex[T]) (error) {
 	}
 }
 
-func (graph *Graph[T]) DFS(data T) *Vertex[T] {
+func DFS[T comparable](
+	value T,
+	origin *Vertex[T],
+	visited map[string]bool,
+	pathQueue *queue.Queue[*Vertex[T]],
+) (*Vertex[T], error) {
+	if origin == nil {
+		return nil, errors.New("null vertex")
+	}
 
+	if (origin.Data == value) {
+		return origin, nil
+	}
 
-	return nil
+	visited[origin.Id] = true
+
+	for _, adjacence := range origin.Adjacences {
+		if (!visited[adjacence.Id]) {
+			pathQueue.Enqueue(adjacence)
+		}
+	}
+
+	var foundedVertex *Vertex[T]
+
+	for pathQueue.Len > 0 && foundedVertex == nil {
+		var zero *Vertex[T]
+
+		nonVisitedVertex, error := pathQueue.Pop()
+
+		if (error != nil) {
+			return zero, error
+		}
+
+ 		foundedVertex, error = DFS(value, nonVisitedVertex, visited, pathQueue)
+
+		if (error != nil) {
+			return zero, error
+		}
+	}
+
+	return foundedVertex, nil
 }

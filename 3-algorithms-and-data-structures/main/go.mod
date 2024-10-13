@@ -6,6 +6,9 @@ replace ads/bst => ../bst
 
 replace ads/graph => ../graph
 
-require ads/queue v0.0.0-00010101000000-000000000000
+require (
+	ads/graph v0.0.0-00010101000000-000000000000
+	ads/queue v0.0.0-00010101000000-000000000000
+)
 
 replace ads/queue => ../queue

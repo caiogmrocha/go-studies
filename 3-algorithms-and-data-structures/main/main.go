@@ -1,42 +1,48 @@
 package main
 
-import "ads/queue"
+import (
+	"ads/graph"
+	"ads/queue"
+	"fmt"
+)
 
 func main() {
-	q := queue.New[int]()
-
-	q.Enqueue(1)
-	q.Enqueue(2)
-	q.Enqueue(3)
-	q.Enqueue(4)
-	q.Enqueue(5)
-
-	q.Pop()
-
-	q.ForEachPrint()
+	testGraphPackage()
 }
 
-// func testGraphPackage() {
-// 	g := &graph.Graph[string]{}
+func testGraphPackage() {
+	g := &graph.Graph[string]{}
 
-// 	g.AddVertex("A", &graph.Vertex[string]{Data: "A"})
-// 	g.AddVertex("B", &graph.Vertex[string]{Data: "B"})
-// 	g.AddVertex("C", &graph.Vertex[string]{Data: "C"})
-// 	g.AddVertex("D", &graph.Vertex[string]{Data: "D"})
-// 	g.AddVertex("E", &graph.Vertex[string]{Data: "E"})
+	g.AddVertex(&graph.Vertex[string]{Id: "A", Data: "A"})
+	g.AddVertex(&graph.Vertex[string]{Id: "B", Data: "B"})
+	g.AddVertex(&graph.Vertex[string]{Id: "C", Data: "C"})
+	g.AddVertex(&graph.Vertex[string]{Id: "D", Data: "D"})
+	g.AddVertex(&graph.Vertex[string]{Id: "E", Data: "E"})
 
-// 	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
-// 	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
-// 	g.AddAdjacence(g.Vertices["C"], g.Vertices["D"])
-// 	g.AddAdjacence(g.Vertices["D"], g.Vertices["E"])
-// 	g.AddAdjacence(g.Vertices["E"], g.Vertices["A"])
+	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
+	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
+	g.AddAdjacence(g.Vertices["C"], g.Vertices["D"])
+	g.AddAdjacence(g.Vertices["D"], g.Vertices["E"])
+	g.AddAdjacence(g.Vertices["E"], g.Vertices["A"])
 
-// 	fmt.Println("Vertices:")
+	vertexToBeFounded := "F"
 
-// 	for k := range g.Vertices {
-// 		fmt.Printf("%s\n", k)
-// 	}
-// }
+	foundedVertex, error := graph.DFS(vertexToBeFounded, g.Vertices["A"], map[string]bool{}, queue.New[*graph.Vertex[string]]())
+
+	if error != nil {
+		fmt.Println("error in DFS:", error)
+
+		return
+	}
+
+	if foundedVertex == nil {
+		fmt.Printf("vertex not found: %s\n", vertexToBeFounded)
+
+		return
+	}
+
+	fmt.Printf("vertex found: %s\n", foundedVertex.Id)
+}
 
 // func printNodeValue(n *bst.Node) (error) {
 // 	if (n == nil) {

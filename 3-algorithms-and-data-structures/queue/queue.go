@@ -8,6 +8,7 @@ import (
 
 type Queue[T any] struct {
 	list *list.List
+	Len int
 };
 
 func New[T any]() (*Queue[T]) {
@@ -22,6 +23,7 @@ func New[T any]() (*Queue[T]) {
 
 func (q *Queue[T]) Enqueue(value T) {
 	q.list.PushBack(value)
+	q.Len++
 }
 
 func (q *Queue[T]) Pop() (T, error) {
@@ -34,6 +36,7 @@ func (q *Queue[T]) Pop() (T, error) {
 	element := q.list.Back()
 	value := element.Value.(T)
 	q.list.Remove(element)
+	q.Len--
 
 	return value, nil
 }
