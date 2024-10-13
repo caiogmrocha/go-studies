@@ -8,22 +8,22 @@ import (
 func main() {
 	g := &graph.Graph[string]{}
 
-	g.AddVertex(&graph.Vertex[string]{Data: "A"})
-	g.AddVertex(&graph.Vertex[string]{Data: "B"})
-	g.AddVertex(&graph.Vertex[string]{Data: "C"})
-	g.AddVertex(&graph.Vertex[string]{Data: "D"})
-	g.AddVertex(&graph.Vertex[string]{Data: "E"})
+	g.AddVertex("A", &graph.Vertex[string]{Data: "A"})
+	g.AddVertex("B", &graph.Vertex[string]{Data: "B"})
+	g.AddVertex("C", &graph.Vertex[string]{Data: "C"})
+	g.AddVertex("D", &graph.Vertex[string]{Data: "D"})
+	g.AddVertex("E", &graph.Vertex[string]{Data: "E"})
 
-	g.AddAdjacence(g.Vertices[0], g.Vertices[1])
-	g.AddAdjacence(g.Vertices[1], g.Vertices[2])
-	g.AddAdjacence(g.Vertices[2], g.Vertices[3])
-	g.AddAdjacence(g.Vertices[3], g.Vertices[4])
-	g.AddAdjacence(g.Vertices[4], g.Vertices[0])
+	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
+	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
+	g.AddAdjacence(g.Vertices["C"], g.Vertices["D"])
+	g.AddAdjacence(g.Vertices["D"], g.Vertices["E"])
+	g.AddAdjacence(g.Vertices["E"], g.Vertices["A"])
 
 	fmt.Println("Vertices:")
 
-	for k,v := range g.Vertices {
-		fmt.Printf("%d - %s\n", k, v.Data)
+	for k := range g.Vertices {
+		fmt.Printf("%s\n", k)
 	}
 }
 
