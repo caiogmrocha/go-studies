@@ -1,31 +1,40 @@
 package main
 
-import (
-	"ads/graph"
-	"fmt"
-)
+import "ads/queue"
 
 func main() {
-	g := &graph.Graph[string]{}
+	q := &queue.Queue[int]{}
 
-	g.AddVertex("A", &graph.Vertex[string]{Data: "A"})
-	g.AddVertex("B", &graph.Vertex[string]{Data: "B"})
-	g.AddVertex("C", &graph.Vertex[string]{Data: "C"})
-	g.AddVertex("D", &graph.Vertex[string]{Data: "D"})
-	g.AddVertex("E", &graph.Vertex[string]{Data: "E"})
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(3)
+	q.Enqueue(4)
+	q.Enqueue(5)
 
-	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
-	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
-	g.AddAdjacence(g.Vertices["C"], g.Vertices["D"])
-	g.AddAdjacence(g.Vertices["D"], g.Vertices["E"])
-	g.AddAdjacence(g.Vertices["E"], g.Vertices["A"])
-
-	fmt.Println("Vertices:")
-
-	for k := range g.Vertices {
-		fmt.Printf("%s\n", k)
-	}
+	q.ForEachPrint()
 }
+
+// func testGraphPackage() {
+// 	g := &graph.Graph[string]{}
+
+// 	g.AddVertex("A", &graph.Vertex[string]{Data: "A"})
+// 	g.AddVertex("B", &graph.Vertex[string]{Data: "B"})
+// 	g.AddVertex("C", &graph.Vertex[string]{Data: "C"})
+// 	g.AddVertex("D", &graph.Vertex[string]{Data: "D"})
+// 	g.AddVertex("E", &graph.Vertex[string]{Data: "E"})
+
+// 	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
+// 	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
+// 	g.AddAdjacence(g.Vertices["C"], g.Vertices["D"])
+// 	g.AddAdjacence(g.Vertices["D"], g.Vertices["E"])
+// 	g.AddAdjacence(g.Vertices["E"], g.Vertices["A"])
+
+// 	fmt.Println("Vertices:")
+
+// 	for k := range g.Vertices {
+// 		fmt.Printf("%s\n", k)
+// 	}
+// }
 
 // func printNodeValue(n *bst.Node) (error) {
 // 	if (n == nil) {

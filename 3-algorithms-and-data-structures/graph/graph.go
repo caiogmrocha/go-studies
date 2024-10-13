@@ -52,3 +52,9 @@ func (graph *Graph[T]) AddAdjacence(a *Vertex[T], b *Vertex[T]) (error) {
 		return errors.New("b not found")
 	}
 }
+
+func (graph *Graph[T]) DFS(data T) *Vertex[T] {
+
+
+	return nil
+}
