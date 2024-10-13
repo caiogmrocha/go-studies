@@ -3,7 +3,7 @@ package graph
 import "errors"
 
 type Graph[T comparable] struct {
-	Vertices []*Vertex[T]
+	Vertices map[string](*Vertex[T])
 }
 
 type Vertex[T any] struct {
@@ -11,12 +11,16 @@ type Vertex[T any] struct {
 	Adjacences []*Vertex[T]
 }
 
-func (graph *Graph[T]) AddVertex(vertex *Vertex[T]) (error) {
+func (graph *Graph[T]) AddVertex(id string, vertex *Vertex[T]) (error) {
 	if (graph == nil) {
 		return errors.New("graph is nil")
 	}
 
-	graph.Vertices = append(graph.Vertices, vertex)
+	if graph.Vertices == nil {
+		graph.Vertices = map[string](*Vertex[T]){}
+	}
+
+	graph.Vertices[id] = vertex
 
 	return nil
 }
