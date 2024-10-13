@@ -11,6 +11,8 @@ func main() {
 	q.Enqueue(4)
 	q.Enqueue(5)
 
+	q.Pop()
+
 	q.ForEachPrint()
 }
 

@@ -2,6 +2,7 @@ package queue
 
 import (
 	"container/list"
+	"errors"
 	"fmt"
 )
 
@@ -20,15 +21,21 @@ func New[T any]() (*Queue[T]) {
 }
 
 func (q *Queue[T]) Enqueue(value T) {
-	if q.list == nil {
-		q.list = list.New()
-	}
-
 	q.list.PushBack(value)
 }
 
-func (q *Queue[T]) Dequeue(value T) {
-	q.list.PushBack(value)
+func (q *Queue[T]) Pop() (T, error) {
+	if q.list.Len() == 0 {
+		var zero T
+
+		return zero, errors.New("queue is empty")
+	}
+
+	element := q.list.Back()
+	value := element.Value.(T)
+	q.list.Remove(element)
+
+	return value, nil
 }
 
 func (q *Queue[T]) ForEachPrint() {
