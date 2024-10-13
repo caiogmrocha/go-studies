@@ -16,6 +16,12 @@ type Vertex[T comparable] struct {
 	Adjacences []*Vertex[T]
 }
 
+func New[T comparable]() *Graph[T] {
+	g := &Graph[T]{}
+
+	return g
+}
+
 func (graph *Graph[T]) AddVertex(vertex *Vertex[T]) (error) {
 	if (graph == nil) {
 		return errors.New("graph is nil")
@@ -58,23 +64,23 @@ func (graph *Graph[T]) AddAdjacence(a *Vertex[T], b *Vertex[T]) (error) {
 }
 
 func DFS[T comparable](
-	value T,
+	data T,
 	origin *Vertex[T],
-	visited map[string]bool,
+	visited *map[string]bool,
 	pathQueue *queue.Queue[*Vertex[T]],
 ) (*Vertex[T], error) {
 	if origin == nil {
 		return nil, errors.New("null vertex")
 	}
 
-	if (origin.Data == value) {
+	if (origin.Data == data) {
 		return origin, nil
 	}
 
-	visited[origin.Id] = true
+	(*visited)[origin.Id] = true
 
 	for _, adjacence := range origin.Adjacences {
-		if (!visited[adjacence.Id]) {
+		if (!(*visited)[adjacence.Id]) {
 			pathQueue.Enqueue(adjacence)
 		}
 	}
@@ -90,7 +96,7 @@ func DFS[T comparable](
 			return zero, error
 		}
 
- 		foundedVertex, error = DFS(value, nonVisitedVertex, visited, pathQueue)
+ 		foundedVertex, error = DFS(data, nonVisitedVertex, visited, pathQueue)
 
 		if (error != nil) {
 			return zero, error

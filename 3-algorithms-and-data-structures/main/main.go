@@ -11,13 +11,7 @@ func main() {
 }
 
 func testGraphPackage() {
-	g := &graph.Graph[string]{}
-
-	g.AddVertex(&graph.Vertex[string]{Id: "A", Data: "A"})
-	g.AddVertex(&graph.Vertex[string]{Id: "B", Data: "B"})
-	g.AddVertex(&graph.Vertex[string]{Id: "C", Data: "C"})
-	g.AddVertex(&graph.Vertex[string]{Id: "D", Data: "D"})
-	g.AddVertex(&graph.Vertex[string]{Id: "E", Data: "E"})
+	g := graph.New[string]()
 
 	g.AddAdjacence(g.Vertices["A"], g.Vertices["B"])
 	g.AddAdjacence(g.Vertices["B"], g.Vertices["C"])
@@ -27,7 +21,7 @@ func testGraphPackage() {
 
 	vertexToBeFounded := "F"
 
-	foundedVertex, error := graph.DFS(vertexToBeFounded, g.Vertices["A"], map[string]bool{}, queue.New[*graph.Vertex[string]]())
+	foundedVertex, error := graph.DFS(vertexToBeFounded, g.Vertices["A"], &map[string]bool{}, queue.New[*graph.Vertex[string]]())
 
 	if error != nil {
 		fmt.Println("error in DFS:", error)
