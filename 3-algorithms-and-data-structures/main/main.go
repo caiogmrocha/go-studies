@@ -3,7 +3,7 @@ package main
 import "ads/queue"
 
 func main() {
-	q := &queue.Queue[int]{}
+	q := queue.New[int]()
 
 	q.Enqueue(1)
 	q.Enqueue(2)
