@@ -14,6 +14,14 @@ func main() {
 	g.AddVertex(&graph.Vertex[string]{Data: "D"})
 	g.AddVertex(&graph.Vertex[string]{Data: "E"})
 
+	g.AddAdjacence(g.Vertices[0], g.Vertices[1])
+	g.AddAdjacence(g.Vertices[1], g.Vertices[2])
+	g.AddAdjacence(g.Vertices[2], g.Vertices[3])
+	g.AddAdjacence(g.Vertices[3], g.Vertices[4])
+	g.AddAdjacence(g.Vertices[4], g.Vertices[0])
+
+	fmt.Println("Vertices:")
+
 	for k,v := range g.Vertices {
 		fmt.Printf("%d - %s\n", k, v.Data)
 	}
