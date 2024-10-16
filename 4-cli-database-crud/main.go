@@ -6,13 +6,14 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 )
 
 type Option int
 
 const (
-	ReadAll Option = iota
-	ReadOne
+	GetAll Option = iota
+	GetOne
 	Create
 	Update
 	Delete
@@ -20,11 +21,10 @@ const (
 )
 
 func main() {
-
 	for {
 		fmt.Println("Choose an option:")
-		fmt.Println("0  - ReadAll")
-		fmt.Println("1  - ReadOne")
+		fmt.Println("0  - GetAll")
+		fmt.Println("1  - GetOne")
 		fmt.Println("2  - Create")
 		fmt.Println("3  - Update")
 		fmt.Println("4  - Delete")
@@ -36,23 +36,25 @@ func main() {
 
 		fmt.Printf("Selected option: %d\n\n", option)
 
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+    cmd.Run()
+
 		switch option {
-			case ReadAll: {
-				fmt.Println("Option not implemented")
+			case GetAll: {
+				productController := cli.ProductCliControllerFactory()
+
+				productController.GetAll()
 			}
 
-			case ReadOne: {
+			case GetOne: {
 				fmt.Println("Option not implemented")
 			}
 
 			case Create: {
 				productController := cli.ProductCliControllerFactory()
 
-				err := productController.Create()
-
-				if err != nil {
-					log.Fatalf("Error while ProductCliController.Create(): %s", err.Error())
-				}
+				productController.Create()
 			}
 
 			case Update: {
@@ -70,10 +72,9 @@ func main() {
 
 			default: {
 				log.Fatalf("Option not allowed: %d", option)
+				log.Print("App exited with status 1")
 				os.Exit(1)
 			}
 		}
-
-		log.Print("App exited with status 0")
 	}
 }

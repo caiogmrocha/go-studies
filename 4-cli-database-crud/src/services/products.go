@@ -14,6 +14,13 @@ type CreateProductDto struct {
 	Price float64
 }
 
+func (service *ProductsService) GetAll() (*[]entities.Product, error) {
+	products, err := service.ProductsRepository.GetAll()
+
+	return products, err
+}
+
+
 func (service *ProductsService) Create(dto *CreateProductDto) (error) {
 	product := &entities.Product{
 		Name: dto.Name,
