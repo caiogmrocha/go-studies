@@ -45,3 +45,13 @@ func (repository GORMProductsRepository) Update(product *entities.Product) (erro
 
 	return nil
 }
+
+func (repository GORMProductsRepository) Delete(product *entities.Product) (error) {
+	result := config.Database.Delete(product)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}

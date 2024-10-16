@@ -98,3 +98,23 @@ func (controller *ProductsCliController) Update() {
 		log.Fatalf("Error while ProductCliController.Update(): %s", err.Error())
 	}
 }
+
+func (controller *ProductsCliController) Delete() {
+	var id int
+
+	fmt.Print("ID: ")
+
+	fmt.Scanf("%d", &id)
+
+	product, err := controller.ProductsService.GetOne(id)
+
+	if err != nil {
+		log.Fatalf("Error while ProductCliController.Delete(): %s", err.Error())
+	}
+
+	err = controller.ProductsService.Delete(product)
+
+	if err != nil {
+		log.Fatalf("Error while ProductCliController.Delete(): %s", err.Error())
+	}
+}

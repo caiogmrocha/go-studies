@@ -47,9 +47,7 @@ func main() {
 			case GetOne: productController.GetOne()
 			case Create: productController.Create()
 			case Update: productController.Update()
-			case Delete: {
-				fmt.Println("Option not implemented")
-			}
+			case Delete: productController.Delete()
 			case Exit: {
 				fmt.Println("App exited with status 0")
 				os.Exit(0)

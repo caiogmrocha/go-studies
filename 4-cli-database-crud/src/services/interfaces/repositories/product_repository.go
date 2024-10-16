@@ -7,4 +7,5 @@ type ProductsRepository interface {
 	GetOne(id int) (*entities.Product, error)
 	Create(product *entities.Product) (error)
 	Update(product *entities.Product) (error)
+	Delete(product *entities.Product) (error)
 }

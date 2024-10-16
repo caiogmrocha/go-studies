@@ -42,3 +42,9 @@ func (service *ProductsService) Update(product *entities.Product) (error) {
 
 	return err
 }
+
+func (service *ProductsService) Delete(product *entities.Product) (error) {
+	err := service.ProductsRepository.Delete(product)
+
+	return err
+}
