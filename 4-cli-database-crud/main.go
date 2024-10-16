@@ -48,6 +48,7 @@ func main() {
 			case Create: productController.Create()
 			case Update: productController.Update()
 			case Delete: productController.Delete()
+
 			case Exit: {
 				fmt.Println("App exited with status 0")
 				os.Exit(0)
