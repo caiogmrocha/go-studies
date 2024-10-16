@@ -20,6 +20,11 @@ func (service *ProductsService) GetAll() (*[]entities.Product, error) {
 	return products, err
 }
 
+func (service *ProductsService) GetOne(id int) (*entities.Product, error) {
+	product, err := service.ProductsRepository.GetOne(id)
+
+	return product, err
+}
 
 func (service *ProductsService) Create(dto *CreateProductDto) (error) {
 	product := &entities.Product{

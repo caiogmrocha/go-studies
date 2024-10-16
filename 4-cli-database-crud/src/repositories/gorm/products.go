@@ -15,6 +15,14 @@ func (repository GORMProductsRepository) GetAll() (*[]entities.Product, error) {
 	return &products, result.Error
 }
 
+func (repository GORMProductsRepository) GetOne(id int) (*entities.Product, error) {
+	var product entities.Product
+
+	result := config.Database.Select("id", "name", "price").Where("id = ?", id).First(&product)
+
+	return &product, result.Error
+}
+
 func (repository GORMProductsRepository) Create(product *entities.Product) (error) {
 	result := config.Database.Create(product)
 

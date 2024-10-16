@@ -27,6 +27,24 @@ func (controller *ProductsCliController) GetAll() {
 	}
 }
 
+func (controller *ProductsCliController) GetOne() {
+	var id int
+
+	fmt.Print("ID: ")
+
+	fmt.Scanf("%d", &id)
+
+	product, err := controller.ProductsService.GetOne(id)
+
+	if err != nil {
+		log.Fatalf("Error while ProductCliController.GetAll(): %s", err.Error())
+	}
+
+	fmt.Printf("\nProduto %d:\n\n", id)
+
+	fmt.Printf("ID: %d, Name: %s, Price: %.2f\n\n", product.ID, product.Name, product.Price)
+}
+
 func (controller *ProductsCliController) Create() {
 	fmt.Print("Informe os dados do produto:\n\n")
 

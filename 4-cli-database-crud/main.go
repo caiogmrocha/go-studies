@@ -48,7 +48,9 @@ func main() {
 			}
 
 			case GetOne: {
-				fmt.Println("Option not implemented")
+				productController := cli.ProductCliControllerFactory()
+
+				productController.GetOne()
 			}
 
 			case Create: {
