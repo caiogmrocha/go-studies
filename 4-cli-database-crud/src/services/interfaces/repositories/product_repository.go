@@ -2,6 +2,6 @@ package repositories
 
 import "crud/src/entities"
 
-type ProductRepository interface {
+type ProductsRepository interface {
 	Create(product *entities.Product) (error)
 }

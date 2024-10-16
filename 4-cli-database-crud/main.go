@@ -1,56 +1,79 @@
 package main
 
 import (
+	_ "crud/src/config"
+	"crud/src/controllers/cli"
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
-type Product struct {
-	gorm.Model
-	ID uint `gorm:"primarykey;autoIncrement"`
-	Name string
-	Price float32
-}
+type Option int
+
+const (
+	ReadAll Option = iota
+	ReadOne
+	Create
+	Update
+	Delete
+	Exit = -1
+)
 
 func main() {
-	godotenv.Load()
 
-	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASS"),
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_DEFAULT"),
-	)
-  db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	for {
+		fmt.Println("Choose an option:")
+		fmt.Println("0  - ReadAll")
+		fmt.Println("1  - ReadOne")
+		fmt.Println("2  - Create")
+		fmt.Println("3  - Update")
+		fmt.Println("4  - Delete")
+		fmt.Println("-1 - Exit")
 
-	if err != nil {
-		panic("failed to connect database")
-	}
+		var option Option
 
-	sqlDB, err := db.DB()
+		fmt.Scanf("%d", &option)
 
-	if err != nil {
-		panic("failed to get DB")
-	}
+		fmt.Printf("Selected option: %d\n\n", option)
 
-	defer sqlDB.Close()
+		switch option {
+			case ReadAll: {
+				fmt.Println("Option not implemented")
+			}
 
-	db.AutoMigrate(&Product{})
+			case ReadOne: {
+				fmt.Println("Option not implemented")
+			}
 
-	// db.Create(&Product{Name: "P01", Price: 10.2})
+			case Create: {
+				productController := cli.ProductCliControllerFactory()
 
-	var products []Product
+				err := productController.Create()
 
-	db.Select("id", "name", "price").Find(&products)
+				if err != nil {
+					log.Fatalf("Error while ProductCliController.Create(): %s", err.Error())
+				}
+			}
 
-	for _, product := range products {
-		log.Printf("{ID: %d, Name: '%s', Price: %.2f}", product.ID, product.Name, product.Price)
+			case Update: {
+				fmt.Println("Option not implemented")
+			}
+
+			case Delete: {
+				fmt.Println("Option not implemented")
+			}
+
+			case Exit: {
+				fmt.Println("App exited with status 0")
+				os.Exit(0)
+			}
+
+			default: {
+				log.Fatalf("Option not allowed: %d", option)
+				os.Exit(1)
+			}
+		}
+
+		log.Print("App exited with status 0")
 	}
 }
