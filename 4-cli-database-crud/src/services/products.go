@@ -9,11 +9,6 @@ type ProductsService struct {
 	ProductsRepository repositories.ProductsRepository
 }
 
-type CreateProductDto struct {
-	Name string
-	Price float64
-}
-
 func (service *ProductsService) GetAll() (*[]entities.Product, error) {
 	products, err := service.ProductsRepository.GetAll()
 
@@ -26,6 +21,11 @@ func (service *ProductsService) GetOne(id int) (*entities.Product, error) {
 	return product, err
 }
 
+type CreateProductDto struct {
+	Name string
+	Price float64
+}
+
 func (service *ProductsService) Create(dto *CreateProductDto) (error) {
 	product := &entities.Product{
 		Name: dto.Name,
@@ -33,6 +33,12 @@ func (service *ProductsService) Create(dto *CreateProductDto) (error) {
 	}
 
 	err := service.ProductsRepository.Create(product)
+
+	return err
+}
+
+func (service *ProductsService) Update(product *entities.Product) (error) {
+	err := service.ProductsRepository.Update(product)
 
 	return err
 }

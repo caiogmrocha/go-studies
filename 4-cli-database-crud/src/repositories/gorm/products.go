@@ -32,3 +32,16 @@ func (repository GORMProductsRepository) Create(product *entities.Product) (erro
 
 	return nil
 }
+
+func (repository GORMProductsRepository) Update(product *entities.Product) (error) {
+	result := config.Database.Model(product).Updates(entities.Product{
+		Name: product.Name,
+		Price: product.Price,
+	})
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}

@@ -21,6 +21,8 @@ const (
 )
 
 func main() {
+	productController := cli.ProductCliControllerFactory()
+
 	for {
 		fmt.Println("Choose an option:")
 		fmt.Println("0  - GetAll")
@@ -41,32 +43,13 @@ func main() {
     cmd.Run()
 
 		switch option {
-			case GetAll: {
-				productController := cli.ProductCliControllerFactory()
-
-				productController.GetAll()
-			}
-
-			case GetOne: {
-				productController := cli.ProductCliControllerFactory()
-
-				productController.GetOne()
-			}
-
-			case Create: {
-				productController := cli.ProductCliControllerFactory()
-
-				productController.Create()
-			}
-
-			case Update: {
-				fmt.Println("Option not implemented")
-			}
-
+			case GetAll: productController.GetAll()
+			case GetOne: productController.GetOne()
+			case Create: productController.Create()
+			case Update: productController.Update()
 			case Delete: {
 				fmt.Println("Option not implemented")
 			}
-
 			case Exit: {
 				fmt.Println("App exited with status 0")
 				os.Exit(0)
