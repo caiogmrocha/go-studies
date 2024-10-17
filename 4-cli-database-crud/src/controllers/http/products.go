@@ -42,7 +42,7 @@ func (controller *ProductsHttpController) GetOne(c *gin.Context) {
 		return
 	}
 
-	products, err := controller.ProductsService.GetOne(id)
+	products, err := controller.ProductsService.GetOne(uint(id))
 
 	if err != nil {
 		log.Printf("Error while ProductsHttpController.GetAll(): %s", err.Error())
@@ -147,5 +147,47 @@ func (controller *ProductsHttpController) Update(c *gin.Context) {
 
 	c.JSON(201, gin.H{
 		"message": "Product updated successfully",
+	})
+}
+
+func (controller *ProductsHttpController) Delete(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Params.ByName("id"), 10, 32)
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Delete(): %s", err.Error())
+
+		c.JSON(500, gin.H{
+			"message": "Internal server error",
+		})
+
+		return
+	}
+
+	product, err := controller.ProductsService.GetOne(uint(id))
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Delete(): %s", err.Error())
+
+		c.JSON(404, gin.H{
+			"message": "Product not found",
+		})
+
+		return
+	}
+
+	err = controller.ProductsService.Delete(product)
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Delete(): %s", err.Error())
+
+		c.JSON(500, gin.H{
+			"message": "Internal server error",
+		})
+
+		return
+	}
+
+	c.JSON(201, gin.H{
+		"message": "Product deleted successfully",
 	})
 }

@@ -28,7 +28,7 @@ func (controller *ProductsCliController) GetAll() {
 }
 
 func (controller *ProductsCliController) GetOne() {
-	var id int
+	var id uint
 
 	fmt.Print("ID: ")
 
@@ -68,7 +68,7 @@ func (controller *ProductsCliController) Create() {
 }
 
 func (controller *ProductsCliController) Update() {
-	var id int
+	var id uint
 
 	fmt.Print("ID: ")
 
@@ -100,7 +100,7 @@ func (controller *ProductsCliController) Update() {
 }
 
 func (controller *ProductsCliController) Delete() {
-	var id int
+	var id uint
 
 	fmt.Print("ID: ")
 
