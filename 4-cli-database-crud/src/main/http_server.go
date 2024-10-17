@@ -15,6 +15,7 @@ func BootstrapHttpServer() {
 
 	r.GET("/api/products", productsHttpController.GetAll)
 	r.GET("/api/products/:id", productsHttpController.GetOne)
+	r.POST("/api/products", productsHttpController.Create)
 
 	err := r.Run(":8080")
 
