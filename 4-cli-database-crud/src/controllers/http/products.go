@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crud/src/entities"
 	"crud/src/services"
 	"log"
 	"strconv"
@@ -93,5 +94,58 @@ func (controller *ProductsHttpController) Create(c *gin.Context) {
 
 	c.JSON(201, gin.H{
 		"message": "Product created successfully",
+	})
+}
+
+func (controller *ProductsHttpController) Update(c *gin.Context) {
+	parsedBody := make(map[string]interface{})
+
+	err := c.BindJSON(&parsedBody)
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Update(): %s", err.Error())
+
+		c.JSON(400, gin.H{
+			"message": "Invalid request body",
+		})
+
+		return
+	}
+
+	id, err := strconv.ParseUint(c.Params.ByName("id"), 10, 32)
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Update(): %s", err.Error())
+
+		c.JSON(500, gin.H{
+			"message": "Internal server error",
+		})
+
+		return
+	}
+
+	name := parsedBody["name"].(string)
+	price := parsedBody["price"].(float64)
+
+	dto := entities.Product{
+		ID: uint(id),
+		Name: name,
+		Price: price,
+	}
+
+	err = controller.ProductsService.Update(&dto)
+
+	if err != nil {
+		log.Printf("Error while ProductsHttpController.Update(): %s", err.Error())
+
+		c.JSON(500, gin.H{
+			"message": "Internal server error",
+		})
+
+		return
+	}
+
+	c.JSON(201, gin.H{
+		"message": "Product updated successfully",
 	})
 }
